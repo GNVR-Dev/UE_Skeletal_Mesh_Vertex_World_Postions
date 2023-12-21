@@ -40,7 +40,7 @@ bool UBPLibraryFuncs::BP_GetSkeletalMeshVertexLocations(USkeletalMeshComponent* 
 	//LocalToWorld
 	const FTransform ToWorld = Mesh->GetComponentTransform();
 	for (FVector3f& EachVertex : Locations) {
-		EachVertex = static_cast<FVector3f>(ToWorld.TransformPosition(FVector(EachVertex.X, EachVertex.Y, EachVertex.Z)));
+		EachVertex = static_cast<FVector3f>(ToWorld.TransformPosition(static_cast<FVector>(EachVertex)));
 	}
 
 	return true;
