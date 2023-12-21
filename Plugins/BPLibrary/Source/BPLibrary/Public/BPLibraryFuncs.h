@@ -31,7 +31,7 @@ class UBPLibraryFuncs : public UBlueprintFunctionLibrary
 	// static float BP_LibrarySampleFunction(float Param);
 
 	UFUNCTION(BlueprintCallable, Category = "SkeletalMesh")
-	static bool BP_GetSkeletalMeshVertexLocations(USkeletalMeshComponent* Mesh, TArray<FVector>& Locations, int32 LODIndex);
+	static bool BP_GetSkeletalMeshVertexLocations(USkeletalMeshComponent* Mesh, TArray<FVector3f>& Locations, int32 LODIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "SkeletalMesh")
 	static void BP_SetCPUSkinningEnabled(USkinnedMeshComponent* Mesh, bool bEnable, bool bRecreateRenderStateImmediately);
