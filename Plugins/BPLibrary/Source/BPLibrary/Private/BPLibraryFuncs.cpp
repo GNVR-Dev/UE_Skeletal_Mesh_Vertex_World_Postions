@@ -14,7 +14,7 @@ UBPLibraryFuncs::UBPLibraryFuncs(const FObjectInitializer& ObjectInitializer)
 // 	return -1;
 // }
 
-bool UBPLibraryFuncs::BP_GetSkeletalMeshVertexLocations(USkeletalMeshComponent* Mesh, TArray<FVector>& Locations, int32 LODIndex)
+bool UBPLibraryFuncs::BP_GetSkeletalMeshVertexLocations(USkeletalMeshComponent* Mesh, TArray<FVector3f>& Locations, int32 LODIndex)
 {
 	if (!Mesh || !Mesh->SkeletalMesh) return false;
 
@@ -32,15 +32,15 @@ bool UBPLibraryFuncs::BP_GetSkeletalMeshVertexLocations(USkeletalMeshComponent* 
 		if (!RenderData) return false;
 		const FSkeletalMeshLODRenderData& LOD = RenderData->LODRenderData[LODIndex];
 		const FSkinWeightVertexBuffer& Buffer = LOD.SkinWeightVertexBuffer;
-		TArray<FMatrix> CacheToLocals;
+		TArray<FMatrix44f> CacheToLocals;
 		Mesh->GetCurrentRefToLocalMatrices(CacheToLocals, LODIndex);
 		Mesh->ComputeSkinnedPositions(Mesh, Locations, CacheToLocals, LOD, Buffer);
 	}
 
 	//LocalToWorld
 	const FTransform ToWorld = Mesh->GetComponentTransform();
-	for (FVector& EachVertex : Locations) {
-		EachVertex = ToWorld.TransformPosition(EachVertex);
+	for (FVector3f& EachVertex : Locations) {
+		EachVertex = static_cast<FVector3f>(ToWorld.TransformPosition(static_cast<FVector>(EachVertex)));
 	}
 
 	return true;
